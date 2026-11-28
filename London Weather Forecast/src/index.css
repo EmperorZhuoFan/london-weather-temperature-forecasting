@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic:wght@400..700&family=Special+Gothic+Condensed+One&family=Special+Gothic+Expanded+One&display=swap');
+@import 'tailwindcss';
+
+/*
+  Design tokens
+  Type:     Special Gothic (interface) · Special Gothic Condensed One (display, numerals) · Special Gothic Expanded One (wordmark)
+  Colour:   per-theme CSS variables set on the app shell (see THEMES in lib/weather.ts):
+            --bg --bg-2 --ink --ink-soft --line --surface --accent --accent-ink --nav
+  Radius:   6 (image) · 14 (control) · 22 (floating nav)
+  Spacing:  4pt grid, 24px screen gutter
+*/
+@theme {
+  --font-sans: 'Special Gothic', system-ui, sans-serif;
+  --font-display: 'Special Gothic Condensed One', 'Special Gothic', sans-serif;
+  --font-wide: 'Special Gothic Expanded One', 'Special Gothic', sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    background: #0a0d12;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+/* Type roles */
+.t-eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+/* Emphasis within display type: no italics in this family, so soften instead */
+.t-display em {
+  font-style: normal;
+  opacity: 0.55;
+}
+.t-numeral {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'lnum';
+}
+.t-wide {
+  font-family: var(--font-wide);
+  font-weight: 400;
+}
+
+.hairline {
+  border-color: var(--line);
+}
+
+.glass-dark {
+  background: rgba(10, 14, 20, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  color: #fff;
+}
+.glass-nav {
+  background: var(--nav);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Sliders */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  outline: none;
+  background: linear-gradient(to right, var(--accent) var(--pct), var(--line) var(--pct));
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Motion */
+@keyframes screen-in {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes kenburns {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.1) translateY(-1.5%); }
+}
+@keyframes progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.animate-screen { animation: screen-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.animate-fade { animation: fade-in 0.6s ease both; }
+.animate-kenburns { animation: kenburns 28s ease-in-out infinite alternate; }
+.animate-progress { animation: progress 1.5s cubic-bezier(0.4, 0, 0.2, 1) both; transform-origin: left; }

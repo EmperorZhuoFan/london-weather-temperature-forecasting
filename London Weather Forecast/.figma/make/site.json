@@ -1,0 +1,11 @@
+{
+  "title": "London Weather Forecast",
+  "description": "Forecasts London temperatures from weather conditions and recommends fitting activities, helping residents and visitors plan their day with confidence.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
