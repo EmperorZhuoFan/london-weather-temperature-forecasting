@@ -1,0 +1,63 @@
+# London Weather Forecast
+
+This project includes a FastAPI backend that trains the existing linear-regression
+pipeline from `data/raw/london_weather.csv` and a mobile-friendly React frontend.
+Predictions use your selected daily weather conditions and temperature history
+from the dataset. The API trains the model on startup, so no saved model artifact
+is required.
+
+The supplied historical dataset ends in 2020 and the app does not fetch live
+weather data. For dates after the dataset, the model uses the latest available
+temperature observations for its lag features; daily weather conditions are
+entered in the app.
+
+## Run the API
+
+From the project root:
+
+```powershell
+python -m pip install -r requirements.txt
+python -m uvicorn src.api:app --host 0.0.0.0 --port 8001
+```
+
+The API trains its model when it starts. Open `http://localhost:8001/docs` to
+try the API, or check `http://localhost:8001/api/health`.
+
+## Run the mobile-friendly frontend
+
+In a second terminal:
+
+```powershell
+Set-Location "London Weather Forecast"
+pnpm install
+pnpm dev -- --host 0.0.0.0
+```
+
+Open the address printed by Vite (normally `http://localhost:8443`). To try it
+on a phone on the same Wi-Fi, open `http://<computer-ip>:8443`; Vite forwards
+API requests to port 8001 on the computer. The UI is responsive for mobile
+browsers; this project does not package a native iOS or Android application.
+
+For a frontend hosted separately from the API, set `VITE_API_URL` to the API's
+base URL when building the frontend.
+
+## API request
+
+Send `POST /api/predict` with a date and weather input values:
+
+```json
+{
+  "date": "2026-07-22",
+  "inputs": {
+    "cloud": 1,
+    "sunshine": 12,
+    "radiation": 280,
+    "precip": 0,
+    "pressure": 1022,
+    "snow": 0
+  }
+}
+```
+
+The response contains the predicted mean temperature, a validation-based
+prediction range, and a weather category used by the frontend.
